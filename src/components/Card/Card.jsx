@@ -3,8 +3,8 @@ const Card = ({ data }) => {
 
   return (
     <div>
-      <div className="border-solid border-black border-2 w-max">
-        <img className="w-24" src={displayIcon} />
+      <div className="bg-white border-solid border-gray border-2 w-max cursor-pointer hover:bg-red">
+        <img className="w-20" src={displayIcon} />
       </div>
       <p className="text-center">{displayName}</p>
     </div>

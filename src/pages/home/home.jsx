@@ -16,8 +16,11 @@ const Home = () => {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="flex justify-center">
-      <div className="w-max grid grid-cols-6 gap-2 ">
+    <div className="flex flex-col justify-center gap-2 bg-red h-[calc(100vh-80px)] items-center">
+      <div className="border-white border-b-2 border-solid w-4/5 text-right">
+        <h1 className="text-white uppercase text-5xl font-bold">Agents</h1>
+      </div>
+      <div className="w-max grid grid-cols-7 gap-2 h-max bg-white p-2.5">
         {character
           .filter((character) => character.role != null)
           .map((character) => (

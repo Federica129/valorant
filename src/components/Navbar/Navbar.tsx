@@ -1,4 +1,4 @@
-const Navbar = () => {
+const Navbar = (): JSX.Element => {
   const btns = ["home", " news", "about"];
 
   return (
@@ -25,8 +25,9 @@ const Navbar = () => {
       </div>
       <div>
         <ul className="flex gap-4">
-          {btns.map((string) => (
+          {btns.map((string, index) => (
             <li
+              key={index}
               className="cursor-pointer uppercase font-bold"
               onClick={() => alert(`This button has no function`)}
             >

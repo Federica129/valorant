@@ -25,8 +25,8 @@ const Home = (): JSX.Element | string => {
       <div className="w-max grid grid-cols-3 md:grid-cols-7 gap-2 h-max bg-white p-2.5">
         {(character as Character[])
           .filter((character) => character.role != null)
-          .map((character) => (
-            <Card data={character} />
+          .map((character, index) => (
+            <Card key={index} data={character} />
           ))}
       </div>
     </div>

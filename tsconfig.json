@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "resolve": {
+      "extensions": [".ts", ".js", ".json"]
+    },
     /* Visit https://aka.ms/tsconfig to read more about this file */
     "jsx": "react-jsx",
     /* Projects */

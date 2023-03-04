@@ -1,4 +1,9 @@
-const Card = ({ data }) => {
+import { Character } from "../../../types/characterVal";
+type CardProps = {
+  data: Character;
+};
+
+const Card: React.FC<CardProps> = ({ data }) => {
   const { displayIcon, displayName } = data;
 
   return (

@@ -10,7 +10,7 @@ const Card: React.FC<CardProps> = ({ data }) => {
   return (
     <div>
       <Link to={`${displayName}`}>
-        <div className="bg-white border-solid border-gray border-2 w-max cursor-pointer hover:bg-red">
+        <div className="bg-white border-solid border-gray border-2 w-max cursor-pointer hover:bg-red transition-all">
           <img className="w-20" src={displayIcon} />
         </div>
       </Link>

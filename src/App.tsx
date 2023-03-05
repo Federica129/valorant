@@ -8,7 +8,6 @@ function App(): JSX.Element {
   return (
     <div className="w-full">
       {/* <QueryClientProvider client={queryClient}> */}
-      <Navbar />
       <Outlet />
       {/* </QueryClientProvider>{" "} */}
     </div>

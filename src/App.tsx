@@ -1,5 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { createContext, useState } from "react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
+import { theme } from "./chakra";
 
 export const State = createContext();
 
@@ -12,13 +14,16 @@ function App(): JSX.Element {
     setUuid,
     prova,
   };
+  console.log("ciao");
 
   return (
-    <div className="w-full">
+    <Box>
       <State.Provider value={context}>
-        <Outlet />
+        <ChakraProvider theme={theme}>
+          <Outlet />
+        </ChakraProvider>
       </State.Provider>
-    </div>
+    </Box>
   );
 }
 

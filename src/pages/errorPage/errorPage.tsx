@@ -1,27 +1,64 @@
+import { Box, Button, Flex, Heading } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { theme } from "../../chakra";
 
 const ErrorPage = (): JSX.Element => {
   return (
-    <div className="bg-error bg-contain pt-10  px-10 md:px-20 bg-blue h-[calc(100vh-80px)]">
-      <div className="flex flex-col justify-around border-l-2  text-white border-solid h-[calc(100vh-120px)]">
-        <h2 className="text-3xl md:text-7xl	pt-20 font-bold text-white border-t-2 border-solid ">
-          SORRY <br />
-          PAGE NOT FOUND
-        </h2>
-        <div className="flex justify-end">
-          <div className="flex justify-end w-3/4 border-b-2 border-solid py-16">
-            <div className="flex justify-center border-2 p-2 border-solid md:w-1/2 max-w-xs">
-              <Link
-                to="/"
-                className="flex justify-center bg-white hover:bg-red text-black hover:text-white px-2 h-10 md:h-14 grow transition-all font-bold"
+    <Box
+      h="calc(100vh - 80px)"
+      bg={theme.colors.blue}
+      px={{ xs: "2rem", md: "10rem" }}
+      backgroundImage="url(https://www.freestyle.abbott/za-en/errors/404/_jcr_content/root/container_1688562517/errorpage.coreimg.png/1627919005948/error-404.png)"
+      bgSize="contain"
+    >
+      <Flex
+        flexDirection="column"
+        justify={{ xs: "center", md: "space-around" }}
+        borderLeft="solid 0.15rem"
+        h="calc(100vh - 120px)"
+        color={theme.colors.white}
+      >
+        <Box>
+          <Heading
+            fontSize={{ xs: "1.8rem", md: "5rem" }}
+            borderTop="solid 0.15rem"
+          >
+            Sorry
+          </Heading>
+          <Heading fontSize={{ xs: "1.8rem", md: "5rem" }}>
+            Page Not Found
+          </Heading>
+        </Box>
+        <Flex justify="end">
+          <Flex justify="end" borderBottom="solid 0.15rem" py="4rem" w="70vw">
+            <Flex
+              justify="center"
+              border="solid 0.15rem"
+              p="0.3rem"
+              w="14.2rem"
+            >
+              <Flex
+                bg="red"
+                _hover={{ bg: "white" }}
+                justifyContent="center"
+                transition="0.5s"
               >
-                <button>GO TO HOMEPAGE</button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                <Link to="/">
+                  <Button
+                    colorScheme="none"
+                    color="white"
+                    _hover={{ color: "black" }}
+                    px="2rem"
+                  >
+                    GO TO HOMEPAGE
+                  </Button>
+                </Link>
+              </Flex>
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
+    </Box>
   );
 };
 

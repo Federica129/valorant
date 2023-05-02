@@ -4,6 +4,8 @@ import { Character } from "../../../types/characterVal";
 import axios from "axios";
 import Card from "../../components/Card/Card";
 import { State } from "../../App";
+import { Box, Grid, GridItem, Heading, VStack } from "@chakra-ui/react";
+import { theme } from "../../chakra";
 
 const Home = (): JSX.Element | string => {
   const [character, setCharacter] = useState<[]>([]);
@@ -27,19 +29,46 @@ const Home = (): JSX.Element | string => {
     return "An error has occurred: " + toString(error.message);
 
   console.log(character);
+
   return (
-    <div className="py-20 flex flex-col justify-center gap-2 bg-red h-max md:h-[calc(100vh-80px)] items-center">
-      <div className="border-white border-b-2 border-solid w-4/5 text-right">
-        <h1 className="text-white uppercase text-5xl font-bold">Agents</h1>
-      </div>
-      <div className="w-max grid grid-cols-3 md:grid-cols-7 gap-2 h-max bg-white p-2.5">
+    <VStack
+      py="4rem"
+      bg={theme.colors.red}
+      h="100%"
+      minH="calc(100vh - 5rem)"
+      justifyContent="center"
+      spacing="1.5rem"
+    >
+      <Box
+        textAlign="end"
+        borderBottom="solid 0.15rem"
+        color={theme.colors.white}
+        width="90%"
+      >
+        <Heading variant="h1" as="h1">
+          Agents
+        </Heading>
+      </Box>
+      <Grid
+        templateColumns={{
+          xs: "repeat(2, 1fr)",
+          md: "repeat(5, 1fr)",
+          lg: "repeat(7, 1fr)",
+        }}
+        gap="1rem"
+        bg="white"
+        p="1.5rem"
+        borderRadius="0.2rem"
+      >
         {(character as Character[])
           .filter((character) => character.role != null)
           .map((character, index) => (
-            <Card key={index} data={character} />
+            <GridItem>
+              <Card key={index} data={character} />
+            </GridItem>
           ))}
-      </div>
-    </div>
+      </Grid>
+    </VStack>
   );
 };
 

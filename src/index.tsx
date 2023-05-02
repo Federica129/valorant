@@ -10,6 +10,8 @@ import ErrorPage from "./pages/errorPage/errorPage";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 import Navbar from "./components/Navbar/Navbar";
+import { ChakraProvider, Heading } from "@chakra-ui/react";
+import { theme } from "./chakra";
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
@@ -33,9 +35,11 @@ const router = createBrowserRouter([
 
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <Navbar />
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <ChakraProvider theme={theme}>
+      <QueryClientProvider client={queryClient}>
+        <Navbar />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ChakraProvider>
   </React.StrictMode>
 );

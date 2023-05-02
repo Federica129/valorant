@@ -1,34 +1,27 @@
-import { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { Character } from "../../../types/characterVal";
 import axios from "axios";
 import Card from "../../components/Card/Card";
-import { State } from "../../App";
 import { Box, Grid, GridItem, Heading, VStack } from "@chakra-ui/react";
 import { theme } from "../../chakra";
+import { useNavigate } from "react-router-dom";
+import { SkeletonSquare } from "../../components/SkeletonSquare/SkeletonSquare";
 
-const Home = (): JSX.Element | string => {
-  const [character, setCharacter] = useState<[]>([]);
-  const [id, setUuid] = useState<string>("");
+const Home = (): JSX.Element => {
+  const navigate = useNavigate();
 
-  const value = useContext<any>(State);
-
-  console.log(value);
-
-  const GET = async (uuid?: string) => {
+  const GET = async () => {
     const res = await axios.get("https://valorant-api.com/v1/agents/");
-
-    return setCharacter(res.data.data);
+    const data = await res;
+    return data.data;
   };
 
-  const { isLoading, error, data } = useQuery("uuid", GET);
+  const { error, data, isFetching } = useQuery({
+    queryKey: ["character"],
+    queryFn: async () => await GET(),
+  });
 
-  if (isLoading) return "Loading...";
-
-  if (error as Record<string, unknown>)
-    return "An error has occurred: " + toString(error.message);
-
-  console.log(character);
+  if (error) navigate("/404");
 
   return (
     <VStack
@@ -60,11 +53,11 @@ const Home = (): JSX.Element | string => {
         p="1.5rem"
         borderRadius="0.2rem"
       >
-        {(character as Character[])
-          .filter((character) => character.role != null)
+        {(data?.data as Character[])
+          ?.filter((character) => character.role != null)
           .map((character, index) => (
-            <GridItem>
-              <Card key={index} data={character} />
+            <GridItem key={index}>
+              {isFetching ? <SkeletonSquare /> : <Card data={character} />}
             </GridItem>
           ))}
       </Grid>

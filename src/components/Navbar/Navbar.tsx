@@ -1,8 +1,10 @@
 import { Box, HStack, List, ListItem } from "@chakra-ui/react";
 import { Logo } from "../Logo/Logo";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = (): JSX.Element => {
   const btns = ["home", " news", "about"];
+  const navigate = useNavigate();
 
   return (
     <HStack
@@ -13,7 +15,7 @@ const Navbar = (): JSX.Element => {
       bg="black"
       h="5rem"
     >
-      <Box cursor="pointer" onClick={(): any => window.location.reload}>
+      <Box cursor="pointer" onClick={(): any => navigate("/")}>
         <Logo />
       </Box>
       <List display="flex" gap="1rem">

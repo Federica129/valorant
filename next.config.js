@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  experimental: {
+    appDir: false,
+  },
   env: {
     googleApiKey: process.env.GOOGLE_API_KEY,
     authDomain: process.env.AUTH_DOMAIN,

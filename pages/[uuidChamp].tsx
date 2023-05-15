@@ -119,7 +119,7 @@ const InfoChamp = (): JSX.Element => {
                   </Flex>
                 </VStack>
                 <Box>
-                  <Image src={fullPortraitV2} />
+                  <Image src={fullPortraitV2} alt={displayName} />
                 </Box>
               </Stack>
 
@@ -145,6 +145,7 @@ const InfoChamp = (): JSX.Element => {
                       bg="blue"
                       w={{ xs: "3rem", md: "4.5rem" }}
                       src={ability.displayIcon}
+                      alt={"ability" + index}
                     />
                     <Box>
                       <Heading variant="h4" w="10rem">

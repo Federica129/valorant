@@ -1,8 +1,8 @@
 import type { AppProps } from "next/app";
-import { Button, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { theme } from "../src/chakra";
-import "./index.css";
+import "../assets/index.css";
 import Navbar from "../src/components/Navbar/Navbar";
 import { useState, useEffect } from "react";
 import { Provider } from "react-redux";
@@ -46,9 +46,6 @@ const App = ({ Component, pageProps }: AppProps) => {
       setUser(user);
     });
   }, []);
-
-  console.log(process.env.TEST);
-  console.log(user);
 
   const signIn = () => signInWithPopup(auth, provider);
   const signOut = () => auth.signOut();

@@ -27,7 +27,8 @@
     "build": "next build",
     "test": "next test",
     "eject": "next eject",
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint": "next lint"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^8.40.0",
     "typescript": "5.0.4"
   }
 }

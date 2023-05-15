@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
   experimental: {
     appDir: true,
   },
@@ -16,5 +16,3 @@ const nextConfig = {
     domains: ["lh3.googleusercontent.com"],
   },
 };
-
-module.exports = nextConfig;

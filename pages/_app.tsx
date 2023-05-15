@@ -30,7 +30,7 @@ const firebaseConfig = {
 
 import { GoogleAuthProvider, User } from "firebase/auth";
 
-import { getAuth, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signInWithPopup } from "firebase/auth";
 import { store } from "../utils/store/store";
 
 const App = ({ Component, pageProps }: AppProps) => {

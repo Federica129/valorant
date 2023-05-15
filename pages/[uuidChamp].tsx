@@ -72,15 +72,14 @@ const InfoChamp = (): JSX.Element => {
 
   const CheckAgent = state.every((el) => el !== agent);
 
-  const ButtonFavourite = () => {
+  const ButtonFavourite = (): void => {
     if (CheckAgent) {
       dispatch(add(agent));
     } else dispatch(remove(agent));
   };
-  console.log(state);
 
   return (
-    <>
+    <Box>
       {loading && (
         <Box bg="blue" p={{ xs: "2rem", md: "3rem" }}>
           <VStack bg="white" p={{ xs: "1rem", md: "2rem" }}>
@@ -160,7 +159,7 @@ const InfoChamp = (): JSX.Element => {
           </VStack>
         </Box>
       )}
-    </>
+    </Box>
   );
 };
 

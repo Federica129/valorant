@@ -4,7 +4,6 @@ import {
   Button,
   Flex,
   Heading,
-  Image,
   List,
   ListItem,
   Stack,
@@ -17,6 +16,7 @@ import { Abilities } from "../types/characterVal";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, add, remove } from "../utils/store/store";
+import Image from "next/image";
 
 const InfoChamp = (): JSX.Element => {
   const router = useRouter();
@@ -59,14 +59,22 @@ const InfoChamp = (): JSX.Element => {
           <Image
             src="https://www.wpfaster.org/wp-content/uploads/2013/06/circle-loading-gif.gif"
             alt="loader"
+            width={100}
+            height={100}
           />
         </VStack>
       </Flex>
     );
   } else if (error) router.push("/404");
 
-  const { displayName, description, fullPortraitV2, abilities } =
-    data?.data || {};
+  const {
+    displayName,
+    description,
+    fullPortraitV2,
+    abilities,
+    displayIcon,
+    killfeedPortrait,
+  } = data?.data || {};
 
   const agent = data?.data || {};
 
@@ -77,6 +85,8 @@ const InfoChamp = (): JSX.Element => {
       dispatch(add(agent));
     } else dispatch(remove(agent));
   };
+
+  console.log(killfeedPortrait);
 
   return (
     <Box>
@@ -104,7 +114,10 @@ const InfoChamp = (): JSX.Element => {
                       {description}
                     </Text>
                   </Box>
-                  <Flex justify="center">
+                  <Flex
+                    justify="center"
+                    pb={{ base: "0", md: "1rem", lg: "2rem" }}
+                  >
                     <Button
                       bg="red"
                       borderRadius="none"
@@ -118,11 +131,22 @@ const InfoChamp = (): JSX.Element => {
                     </Button>
                   </Flex>
                 </VStack>
-                <Box>
-                  <Image src={fullPortraitV2} alt={displayName} />
+                <Box
+                  w={{ xs: "15rem", lg: "25rem" }}
+                  h={{ xs: "15rem", lg: "25rem" }}
+                  position="relative"
+                  flex="0 0 auto"
+                  alignSelf="center"
+                >
+                  <Image
+                    src={fullPortraitV2}
+                    alt={displayName}
+                    fill
+                    sizes="(max-width: 992px) 15rem, 25rem"
+                    style={{ objectFit: "cover" }}
+                  />
                 </Box>
               </Stack>
-
               <Box borderTop="solid 0.5rem" color="blue">
                 <Heading
                   color="red"
@@ -135,18 +159,23 @@ const InfoChamp = (): JSX.Element => {
               </Box>
               <List display="flex" flexDirection="column" gap="1rem">
                 {abilities?.map((ability: Abilities, index: number) => (
-                  <ListItem
-                    display="flex"
-                    alignItems="center"
-                    gap="1rem"
-                    key={index}
-                  >
-                    <Image
+                  <ListItem display="flex" gap="1rem" key={index}>
+                    <Box
                       bg="blue"
                       w={{ xs: "3rem", md: "4.5rem" }}
-                      src={ability.displayIcon}
-                      alt={"ability" + index}
-                    />
+                      h={{ xs: "3rem", md: "4.5rem" }}
+                      position="relative"
+                      flex="0 0 auto"
+                      mt="0.45rem"
+                    >
+                      <Image
+                        fill
+                        sizes="(max-width: 768px) 3rem, 4.5rem"
+                        src={ability.displayIcon ?? killfeedPortrait}
+                        alt={"ability" + index}
+                        style={{ objectFit: "cover" }}
+                      />
+                    </Box>
                     <Box>
                       <Heading variant="h4" w="10rem">
                         {ability.displayName}

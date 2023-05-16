@@ -1,7 +1,8 @@
 import { Character } from "../../../types/characterVal";
-import { Box, Image, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { theme } from "../../chakra";
 import Link from "next/link";
+import Image from "next/image";
 
 type CardProps = {
   data: Character;
@@ -19,8 +20,18 @@ const Card: React.FC<CardProps> = ({ data }) => {
           transition="all"
           cursor="pointer"
           _hover={{ bg: `${theme.colors.red}` }}
+          w="5rem"
+          h="5rem"
+          position="relative"
+          flex="0 0 auto"
         >
-          <Image h="5rem" src={displayIcon} alt={displayName} />
+          <Image
+            src={displayIcon}
+            alt={displayName}
+            fill
+            sizes="5rem"
+            style={{ objectFit: "cover" }}
+          />
         </Box>
       </Link>
       <Text as="p" align="center" color="black">

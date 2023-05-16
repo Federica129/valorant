@@ -1,5 +1,7 @@
-import { Link } from "react-router-dom";
 import { Character } from "../../../types/characterVal";
+import { Box, Image, Text } from "@chakra-ui/react";
+import { theme } from "../../chakra";
+import Link from "next/link";
 
 type CardProps = {
   data: Character;
@@ -9,14 +11,22 @@ const Card: React.FC<CardProps> = ({ data }) => {
   const { displayIcon, displayName, uuid } = data;
 
   return (
-    <div>
-      <Link to={`${uuid}`}>
-        <div className="bg-white border-solid border-gray border-2 w-max cursor-pointer hover:bg-red transition-all">
-          <img className="w-20" src={displayIcon} />
-        </div>
+    <Box>
+      <Link href={`${uuid}`}>
+        <Box
+          bg="white"
+          border={`solid 0.15rem ${theme.colors.black}`}
+          transition="all"
+          cursor="pointer"
+          _hover={{ bg: `${theme.colors.red}` }}
+        >
+          <Image h="5rem" src={displayIcon} alt={displayName} />
+        </Box>
       </Link>
-      <p className="text-center">{displayName}</p>
-    </div>
+      <Text as="p" align="center" color="black">
+        {displayName}
+      </Text>
+    </Box>
   );
 };
 

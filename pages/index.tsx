@@ -54,7 +54,7 @@ const Home = (): JSX.Element => {
         borderRadius="0.2rem"
       >
         {(data?.data as Character[])
-          ?.filter((character) => character.role != null)
+          ?.filter((character) => character.isPlayableCharacter == true)
           .map((character, index) => (
             <GridItem key={index}>
               {isFetching ? <SkeletonSquare /> : <Card data={character} />}

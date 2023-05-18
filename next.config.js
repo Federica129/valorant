@@ -14,5 +14,9 @@ module.exports = {
   },
   images: {
     domains: ["lh3.googleusercontent.com"],
+    remotePatterns: [
+      { protocol: "https", hostname: "media.valorant-api.com" },
+      { protocol: "https", hostname: "www.wpfaster.org" },
+    ],
   },
 };

@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   Box,
   Button,
@@ -11,35 +10,50 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useQuery } from "react-query";
-import { useState } from "react";
 import { Abilities } from "../types/characterVal";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, add, remove } from "../utils/store/store";
 import Image from "next/image";
+import { GET } from "../utils/api";
 
-const InfoChamp = (): JSX.Element => {
+export async function getStaticPaths() {
+  // Call an external API endpoint to get character
+  const res = await fetch("https://valorant-api.com/v1/agents/");
+  const character = await res.json();
+
+  // (slower builds, but faster initial page load)
+  const paths = character.data.map((character: any) => ({
+    params: {
+      uuidChamp: character.uuid.toString(),
+    },
+  }));
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps(context: any) {
+  const { uuidChamp } = context.params || {};
+
+  const res = await fetch("https://valorant-api.com/v1/agents/" + uuidChamp);
+  const data = await res.json();
+  const agentData = data.data;
+
+  return {
+    props: { agentData }, // will be passed to the page component as props
+  };
+}
+
+const InfoChamp = ({ agentData }: any): JSX.Element => {
+  const { uuid } = agentData;
   const router = useRouter();
-  const { uuidChamp } = router.query;
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.favourite.agents);
 
-  const GET = async () => {
-    if (uuidChamp) {
-      const res = await axios.get(
-        `https://valorant-api.com/v1/agents/${uuidChamp}`
-      );
-      const data = await res;
-      setLoading(true);
-
-      return data.data;
-    }
-  };
-
-  const { error, data, status } = useQuery({
-    queryKey: ["characterInfo", uuidChamp],
-    queryFn: async () => await GET(),
+  const { error, data, status, isLoading } = useQuery({
+    queryKey: ["characterInfo", agentData],
+    queryFn: async () => await GET(uuid),
+    initialData: agentData,
   });
 
   if (status === "loading") {
@@ -72,11 +86,10 @@ const InfoChamp = (): JSX.Element => {
     description,
     fullPortraitV2,
     abilities,
-    displayIcon,
     killfeedPortrait,
-  } = data?.data || {};
+  } = data.data || {};
 
-  const agent = data?.data || {};
+  const agent = data.data || {};
 
   const CheckAgent = state.every((el) => el !== agent);
 
@@ -86,11 +99,9 @@ const InfoChamp = (): JSX.Element => {
     } else dispatch(remove(agent));
   };
 
-  console.log(killfeedPortrait);
-
   return (
     <Box>
-      {loading && (
+      {!isLoading && (
         <Box bg="blue" p={{ xs: "2rem", md: "3rem" }}>
           <VStack bg="white" p={{ xs: "1rem", md: "2rem" }}>
             <Stack>
@@ -144,6 +155,7 @@ const InfoChamp = (): JSX.Element => {
                     fill
                     sizes="(max-width: 992px) 15rem, 25rem"
                     style={{ objectFit: "cover" }}
+                    priority
                   />
                 </Box>
               </Stack>

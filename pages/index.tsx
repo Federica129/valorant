@@ -1,7 +1,7 @@
 import { Box, Text } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-const LoginPage = (props) => {
+const LoginPage = (props: any) => {
   const { user } = props;
   const router = useRouter();
   console.log(user);

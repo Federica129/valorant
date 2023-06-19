@@ -16,6 +16,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, add, remove } from "../utils/store/store";
 import Image from "next/image";
 import { GET } from "../utils/api";
+import { motion } from "framer-motion";
+import { theme } from "../src/chakra";
+import { useState } from "react";
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get character
@@ -46,6 +49,7 @@ export async function getStaticProps(context: any) {
 
 const InfoChamp = ({ agentData }: any): JSX.Element => {
   const { uuid } = agentData;
+  const [isHover, setIsHover] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state.favourite.agents);
@@ -99,6 +103,18 @@ const InfoChamp = ({ agentData }: any): JSX.Element => {
     } else dispatch(remove(agent));
   };
 
+  const buttonVariants = {
+    notHover: {
+      color: "white",
+      backgroundColor: `${theme.colors.red}`,
+      backgroundImage: `linear-gradient(140deg , ${theme.colors.blue}, ${theme.colors.blue})`,
+      backgroundSize: "0% 100%",
+      backgroundRepeat: "no-repeat",
+      transition: { duration: 0.3 },
+    },
+    onHover: { backgroundSize: "100% 100%", transition: { duration: 0.3 } },
+  };
+
   return (
     <Box>
       {!isLoading && (
@@ -130,10 +146,15 @@ const InfoChamp = ({ agentData }: any): JSX.Element => {
                     pb={{ base: "0", md: "1rem", lg: "2rem" }}
                   >
                     <Button
-                      bg="red"
+                      as={motion.button}
+                      variants={buttonVariants}
+                      initial="notHover"
+                      whileHover="onHover"
+                      animate="notHover"
+                      bg="transparent"
                       borderRadius="none"
                       color="white"
-                      _hover={{ bg: "blue" }}
+                      _hover={{ bg: "transparent" }}
                       onClick={ButtonFavourite}
                     >
                       {CheckAgent

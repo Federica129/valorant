@@ -12,7 +12,7 @@ const LoginPage = (props) => {
       <Text as="h1">Valorant</Text>
       <Box>
         <Text>Login:</Text>
-        // bottone login google
+        {/* bottone login google */}
       </Box>
     </Box>
   );

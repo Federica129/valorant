@@ -4,13 +4,19 @@ import { useRouter } from "next/router";
 import { theme } from "../../chakra";
 import Image from "next/image";
 import { useState } from "react";
-import { BiLogOut, BiLogIn } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
+import { motion } from "framer-motion";
 
 const Navbar = (props: any): JSX.Element => {
   const router = useRouter();
   const [isActive, setIsActive] = useState(false);
-  const { signIn, user, signOut } = props;
+  const { user, signOut, setUser } = props;
   const { displayName, photoURL } = user || {};
+
+  const variants = {
+    close: { y: -100, transition: { duration: 0.5 } },
+    open: { y: 0, transition: { duration: 0.5 } },
+  };
 
   return (
     <HStack
@@ -19,12 +25,12 @@ const Navbar = (props: any): JSX.Element => {
       justify="space-between"
       alignItems="center"
       bg="black"
-      h="5.1rem"
+      h="5rem"
     >
       <Box cursor="pointer" onClick={(): any => router.push("/")}>
         <Logo />
       </Box>
-      {user ? (
+      {user && (
         <Box h="100%" w="max-content">
           <Flex
             bg="black"
@@ -51,13 +57,15 @@ const Navbar = (props: any): JSX.Element => {
             <Text>Hi, {displayName.split(" ")[0]}</Text>
           </Flex>
           <Box
+            as={motion.div}
             position="relative"
             zIndex={1}
-            top={isActive ? "-0.1rem" : "-5rem"}
             bg="black"
             w="100%"
             p="0.5rem"
-            transition="0.5s"
+            variants={variants}
+            initial="close"
+            animate={isActive ? "open" : "close"}
           >
             <Button
               w="100%"
@@ -72,28 +80,15 @@ const Navbar = (props: any): JSX.Element => {
               pl="0"
               leftIcon={<BiLogOut />}
               onClick={() => {
-                signOut(), setIsActive(false);
+                signOut();
+                setIsActive(false);
+                setUser("");
               }}
             >
               LogOut
             </Button>
           </Box>
         </Box>
-      ) : (
-        <Button
-          leftIcon={<BiLogIn />}
-          bg="black"
-          pl="0"
-          borderRadius="0"
-          borderBottom={`0.1rem solid ${theme.colors.red}`}
-          _hover={{
-            bg: "none",
-            borderBottom: `0.1rem solid ${theme.colors.white}`,
-          }}
-          onClick={() => signIn()}
-        >
-          Login
-        </Button>
       )}
     </HStack>
   );

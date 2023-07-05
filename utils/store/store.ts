@@ -5,13 +5,13 @@ export interface FavouriteState {
   agents: Record<string, unknown>[];
 }
 
-const initialState: FavouriteState = {
+const initialFavouriteState: FavouriteState = {
   agents: [],
 };
 
 export const favouriteSlice = createSlice({
   name: "favourite",
-  initialState,
+  initialState: initialFavouriteState,
   reducers: {
     add: (state, action) => {
       state.agents = [...state.agents, action.payload];
@@ -24,11 +24,24 @@ export const favouriteSlice = createSlice({
 
 export const { add, remove } = favouriteSlice.actions;
 
-export default favouriteSlice.reducer;
+const userState: { user: Record<string, unknown> } = { user: {} };
+
+export const userSlice = createSlice({
+  name: "user",
+  initialState: userState,
+  reducers: {
+    login: (state, action) => {
+      state.user = action.payload;
+    },
+  },
+});
+
+export const { login } = userSlice.actions;
 
 export const store = configureStore({
   reducer: {
     favourite: favouriteSlice.reducer,
+    user: userSlice.reducer,
   },
 });
 

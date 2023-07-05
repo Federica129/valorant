@@ -5,12 +5,12 @@ import { theme } from "../src/chakra";
 import "../assets/index.css";
 import Navbar from "../src/components/Navbar/Navbar";
 import { useState, useEffect } from "react";
-import { Provider, useDispatch, useSelector } from "react-redux";
+import { Provider } from "react-redux";
 
 import { initializeApp } from "firebase/app";
 import { GoogleAuthProvider, User } from "firebase/auth";
 import { getAuth, signInWithPopup } from "firebase/auth";
-import { RootState, login, store } from "../utils/store/store";
+import { store } from "../utils/store/store";
 
 import { chakra, shouldForwardProp } from "@chakra-ui/react";
 import { motion, isValidMotionProp } from "framer-motion";
@@ -39,14 +39,14 @@ const App = ({ Component, pageProps }: AppProps) => {
   const provider = new GoogleAuthProvider();
   const [user, setUser] = useState<User | null>();
   const auth = getAuth();
-  // const dispatch = useDispatch();
+
   useEffect(() => {
-    // if (!user) router.push("/login");
+    if (!user) router.push("/");
 
     auth.onAuthStateChanged(async (user) => {
       setUser(user);
     });
-  }, []);
+  }, [user]);
 
   const signIn = () => signInWithPopup(auth, provider);
   const signOut = () => auth.signOut();
@@ -59,14 +59,17 @@ const App = ({ Component, pageProps }: AppProps) => {
     },
   });
 
-  console.log(user);
-
   return (
     <Provider store={store}>
       <ChakraProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
-          <Navbar signIn={signIn} user={user} signOut={signOut} />
-          <Component {...pageProps} user={user} />
+          <Navbar
+            signIn={signIn}
+            user={user}
+            setUser={setUser}
+            signOut={signOut}
+          />
+          <Component {...pageProps} user={user} signIn={signIn} />
         </QueryClientProvider>
       </ChakraProvider>
     </Provider>

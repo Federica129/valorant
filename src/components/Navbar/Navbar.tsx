@@ -4,14 +4,13 @@ import { useRouter } from "next/router";
 import { theme } from "../../chakra";
 import Image from "next/image";
 import { useState } from "react";
-import { BiLogOut, BiLogIn } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
 import { motion } from "framer-motion";
-import { ChakraBox } from "../../../pages/_app";
 
 const Navbar = (props: any): JSX.Element => {
   const router = useRouter();
   const [isActive, setIsActive] = useState(false);
-  const { signIn, user, signOut } = props;
+  const { user, signOut, setUser } = props;
   const { displayName, photoURL } = user || {};
 
   const variants = {
@@ -31,7 +30,7 @@ const Navbar = (props: any): JSX.Element => {
       <Box cursor="pointer" onClick={(): any => router.push("/")}>
         <Logo />
       </Box>
-      {user ? (
+      {user && (
         <Box h="100%" w="max-content">
           <Flex
             bg="black"
@@ -81,28 +80,15 @@ const Navbar = (props: any): JSX.Element => {
               pl="0"
               leftIcon={<BiLogOut />}
               onClick={() => {
-                signOut(), setIsActive(false);
+                signOut();
+                setIsActive(false);
+                setUser("");
               }}
             >
               LogOut
             </Button>
           </Box>
         </Box>
-      ) : (
-        <Button
-          leftIcon={<BiLogIn />}
-          bg="black"
-          pl="0"
-          borderRadius="0"
-          borderBottom={`0.1rem solid ${theme.colors.red}`}
-          _hover={{
-            bg: "none",
-            borderBottom: `0.1rem solid ${theme.colors.white}`,
-          }}
-          onClick={() => signIn()}
-        >
-          Login
-        </Button>
       )}
     </HStack>
   );

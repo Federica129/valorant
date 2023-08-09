@@ -1,4 +1,4 @@
-import { Box, Container } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { Carousel } from "../../Carousel/Carousel";
 import { useQuery } from "react-query";
 import { GET } from "../../../../utils/api";
@@ -17,10 +17,16 @@ export const MapCarousel = () => {
     <Box w="full">
       <Carousel
         content={maps}
-        slideMapper={({ slide }) => <MapCard {...slide} />}
-        containerProps={{ gap: "1rem" }}
+        slideMapper={({ slide, isActiveSlide }) => (
+          <MapCard
+            {...slide}
+            variant={isActiveSlide ? "inView" : "notInView"}
+          />
+        )}
         options={{ loop: true }}
-        plugins={[Autoplay({ delay: 2500 })]}
+        plugins={[Autoplay({ delay: 3000 })]}
+        showButtons={true}
+        sizeSlide={{ base: "0 0 90%", lg: "0 0 60%" }}
       />
     </Box>
   );

@@ -1,10 +1,9 @@
 import { BoxProps } from "@chakra-ui/react";
-import { AutoplayOptionsType, AutoplayType } from "embla-carousel-autoplay";
 
 export interface CarouselProps {
   content: Record<string, unknown>[];
   options?: Record<string, unknown>;
-  sizeSlide?: string | number;
+  sizeSlide?: string | Record<string, string>;
   slideMapper: (props: {
     slide: any;
     isActiveSlide?: boolean;
@@ -12,4 +11,5 @@ export interface CarouselProps {
   }) => JSX.Element;
   containerProps?: BoxProps;
   plugins?: any;
+  showButtons?: boolean;
 }

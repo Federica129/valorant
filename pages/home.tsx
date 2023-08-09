@@ -38,12 +38,11 @@ const Home = (): JSX.Element => {
         </Heading>
       </Box>
       <Grid
-        templateColumns={{
-          xs: "repeat(2, 1fr)",
-          md: "repeat(5, 1fr)",
-          lg: "repeat(7, 1fr)",
-        }}
-        gap="1rem"
+        templateColumns="repeat(auto-fill, 100px)"
+        justifyContent="center"
+        justifyItems="center"
+        w="90%"
+        gap="1rem 0"
         bg="white"
         p="1.5rem"
         borderRadius="0.2rem"

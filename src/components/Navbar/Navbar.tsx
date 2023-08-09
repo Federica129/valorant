@@ -31,6 +31,7 @@ const Navbar = (): JSX.Element => {
     auth.onAuthStateChanged(async (user) => {
       dispatch(login(user));
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
@@ -42,7 +43,10 @@ const Navbar = (): JSX.Element => {
       bg="black"
       h="5rem"
     >
-      <Box cursor="pointer" onClick={(): any => router.push("/")}>
+      <Box
+        cursor="pointer"
+        onClick={() => (user ? router.push("/home") : router.push("/"))}
+      >
         <Logo />
       </Box>
       {user && (

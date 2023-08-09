@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { Icon, SocialListLogin } from "../utils/socialListLogin";
 import { MdOutlineGames } from "react-icons/md";
-import { SignIn } from "../firebase";
+import { SignIn, auth } from "../firebase";
 import { useSelector } from "react-redux";
 import { RootState } from "../utils/store/store";
 
@@ -33,7 +33,8 @@ const LoginPage = () => {
   const user = state.user.user;
 
   useEffect(() => {
-    if (user) router.push("/home");
+    if (auth.currentUser) router.push("/home");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const marqueeVariants = {

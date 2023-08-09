@@ -1,12 +1,24 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, BoxProps, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { MapCardProps } from "./MapCard.props";
 
 export const MapCard = (props: MapCardProps) => {
-  const { splash, displayName } = props;
+  const { splash, displayName, variant = "inView" } = props;
+
+  const sizeCard: Record<string, BoxProps> = {
+    inView: { opacity: 1, transform: `scale(1)` },
+    notInView: { opacity: 0.5, transform: `scale(0.95)` },
+  };
 
   return (
-    <Box position="relative" h="20rem" borderRadius=".4rem" overflow="hidden">
+    <Box
+      position="relative"
+      h="20rem"
+      borderRadius=".4rem"
+      overflow="hidden"
+      transition="0.7s all"
+      {...sizeCard[variant]}
+    >
       <Box
         display="flex"
         alignItems="end"

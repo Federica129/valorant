@@ -1,8 +1,19 @@
-const GET = async (uuid?: string | number) => {
-  const res = await fetch(`https://valorant-api.com/v1/agents/${uuid}`);
-  const data = res.json();
+import axios from "axios";
 
-  return data;
+// const GET = async (input: string, uuid?: string | number) => {
+//   const res = await fetch(`https://valorant-api.com/v1/${input}/${uuid}`);
+//   const data = res.json();
+
+//   return data;
+// };
+
+const GET = async (input: string, uuid?: string | number) => {
+  console.log(input);
+  const res = await axios.get(
+    `https://valorant-api.com/v1/${input}/` + `${uuid ?? ""}`
+  );
+  const data = await res;
+  return data.data;
 };
 
 export { GET };

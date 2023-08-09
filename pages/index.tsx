@@ -15,20 +15,27 @@ import {
   useTransform,
 } from "framer-motion";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { Icon, SocialListLogin } from "../utils/socialListLogin";
 import { MdOutlineGames } from "react-icons/md";
+import { SignIn, auth } from "../firebase";
+import { useSelector } from "react-redux";
+import { RootState } from "../utils/store/store";
 
-const LoginPage = (props: any) => {
-  const { user, signIn } = props;
+const LoginPage = () => {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const time = useTime();
   const rotate = useTransform(time, [0, 30000], [0, 360], { clamp: false });
   const shouldReduceMotion = useReducedMotion();
+  const state = useSelector((state: RootState) => state);
+  const user = state.user.user;
 
-  if (user) router.push("/home");
+  useEffect(() => {
+    if (auth.currentUser) router.push("/home");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   const marqueeVariants = {
     animate: {
@@ -148,7 +155,7 @@ const LoginPage = (props: any) => {
         >
           Valorant
         </Heading>
-        <Box p="1rem" bg="white" w="30vw">
+        <Box p="1rem" bg="white" w={{ base: "70vw", md: "50vw", lg: "70vw" }}>
           <Text
             onClick={() => setIsVisible(!isVisible)}
             display="flex"
@@ -172,7 +179,7 @@ const LoginPage = (props: any) => {
           {isVisible && (
             <Flex
               bg="white"
-              w="30vw"
+              w={{ base: "70vw", md: "50vw", lg: "70vw" }}
               as={motion.div}
               variants={boxLogin}
               initial="hidden"
@@ -194,7 +201,7 @@ const LoginPage = (props: any) => {
                     variants={item}
                     custom={index}
                     whileHover={{ scale: 1.1, cursor: "pointer" }}
-                    onClick={() => social.google && signIn()}
+                    onClick={() => social.google && SignIn()}
                   >
                     <Icon {...social} />
                   </ListItem>

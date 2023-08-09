@@ -3,20 +3,36 @@ import { Logo } from "../Logo/Logo";
 import { useRouter } from "next/router";
 import { theme } from "../../chakra";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { motion } from "framer-motion";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, login } from "../../../utils/store/store";
+import { SignOut, auth } from "../../../firebase";
 
-const Navbar = (props: any): JSX.Element => {
+const Navbar = (): JSX.Element => {
   const router = useRouter();
   const [isActive, setIsActive] = useState(false);
-  const { user, signOut, setUser } = props;
-  const { displayName, photoURL } = user || {};
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state);
+  const user = state.user.user;
+  const { displayName, photoURL }: Record<string, any> = user || {};
 
   const variants = {
     close: { y: -100, transition: { duration: 0.5 } },
     open: { y: 0, transition: { duration: 0.5 } },
   };
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+
+    auth.onAuthStateChanged(async (user) => {
+      dispatch(login(user));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <HStack
@@ -27,7 +43,10 @@ const Navbar = (props: any): JSX.Element => {
       bg="black"
       h="5rem"
     >
-      <Box cursor="pointer" onClick={(): any => router.push("/")}>
+      <Box
+        cursor="pointer"
+        onClick={() => (user ? router.push("/home") : router.push("/"))}
+      >
         <Logo />
       </Box>
       {user && (
@@ -54,7 +73,7 @@ const Navbar = (props: any): JSX.Element => {
                 alt="photo account"
               />
             </Box>
-            <Text>Hi, {displayName.split(" ")[0]}</Text>
+            <Text>Hi, {displayName?.split(" ")[0]}</Text>
           </Flex>
           <Box
             as={motion.div}
@@ -80,9 +99,8 @@ const Navbar = (props: any): JSX.Element => {
               pl="0"
               leftIcon={<BiLogOut />}
               onClick={() => {
-                signOut();
+                SignOut();
                 setIsActive(false);
-                setUser("");
               }}
             >
               LogOut

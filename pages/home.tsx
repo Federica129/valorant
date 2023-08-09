@@ -1,24 +1,19 @@
 import { useQuery } from "react-query";
-import axios from "axios";
 import { Box, Grid, GridItem, Heading, VStack } from "@chakra-ui/react";
 import { theme } from "../src/chakra";
 import { SkeletonSquare } from "../src/components/SkeletonSquare/SkeletonSquare";
 import Card from "../src/components/Card/Card";
 import { Character } from "../types/characterVal";
 import { useRouter } from "next/router";
+import { MapCarousel } from "../src/components/Block/MapCarousel/MapCarousel";
+import { GET } from "../utils/api";
 
 const Home = (): JSX.Element => {
   const router = useRouter();
 
-  const GET = async () => {
-    const res = await axios.get("https://valorant-api.com/v1/agents/");
-    const data = await res;
-    return data.data;
-  };
-
   const { error, data, isFetching } = useQuery({
     queryKey: ["character"],
-    queryFn: async () => await GET(),
+    queryFn: async () => await GET("agents"),
   });
 
   if (error) router.push("/404");
@@ -43,12 +38,11 @@ const Home = (): JSX.Element => {
         </Heading>
       </Box>
       <Grid
-        templateColumns={{
-          xs: "repeat(2, 1fr)",
-          md: "repeat(5, 1fr)",
-          lg: "repeat(7, 1fr)",
-        }}
-        gap="1rem"
+        templateColumns="repeat(auto-fill, 100px)"
+        justifyContent="center"
+        justifyItems="center"
+        w="90%"
+        gap="1rem 0"
         bg="white"
         p="1.5rem"
         borderRadius="0.2rem"
@@ -61,6 +55,7 @@ const Home = (): JSX.Element => {
             </GridItem>
           ))}
       </Grid>
+      <MapCarousel />
     </VStack>
   );
 };

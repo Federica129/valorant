@@ -10,8 +10,12 @@ export const theme = extendTheme({
   components: { Heading: HeadingTheme },
   styles: {
     global: {
+      ".object-fit-cover": {
+        objectFit: "cover",
+      },
+
       p: {
-        fontSize: { xs: "0.9rem", md: "1.1rem" },
+        fontSize: { md: "1.2rem" },
       },
 
       body: {

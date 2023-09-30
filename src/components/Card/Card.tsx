@@ -3,14 +3,15 @@ import { Box, Text } from "@chakra-ui/react";
 import { theme } from "../../chakra";
 import Link from "next/link";
 import Image from "next/image";
+import { FormBlockProps } from "../Block/FormBlock/FormBlock.props";
 
 type CardProps = {
-  data: Character;
+  data: Character | FormBlockProps;
 };
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  const { displayIcon, displayName, uuid } = data;
-
+  const { displayIcon, displayName, uuid = "1" } = data;
+  // TO DO
   return (
     <Box>
       <Link href={`${uuid}`}>

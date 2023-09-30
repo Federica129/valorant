@@ -7,7 +7,7 @@ export const MapCard = (props: MapCardProps) => {
 
   const sizeCard: Record<string, BoxProps> = {
     inView: { opacity: 1, transform: `scale(1)` },
-    notInView: { opacity: 0.5, transform: `scale(0.95)` },
+    notInView: { opacity: 0.75, transform: `scale(0.95)` },
   };
 
   return (
@@ -38,7 +38,13 @@ export const MapCard = (props: MapCardProps) => {
           {displayName}
         </Text>
       </Box>
-      <Image className="object-fit-cover" src={splash} alt={displayName} fill />
+      <Image
+        className="object-fit-cover"
+        src={splash}
+        alt={displayName}
+        fill
+        sizes="100vw"
+      />
     </Box>
   );
 };

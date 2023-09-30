@@ -45,6 +45,7 @@ export const Carousel = (props: CarouselProps) => {
     borderRadius: "full",
     transform: "scale(3)",
     cursor: "pointer",
+    color: "red",
   };
 
   return (

@@ -7,7 +7,6 @@ import { GET } from "../../../../utils/api";
 import { Character } from "../../../../types/characterVal";
 import { RootState } from "../../../../utils/store/store";
 import { useSelector } from "react-redux";
-import { Key, useId } from "react";
 import { FormBlockProps } from "../FormBlock/FormBlock.props";
 
 export const AgentsBlock = () => {
@@ -37,12 +36,13 @@ export const AgentsBlock = () => {
             </GridItem>
           ))}
         {(state.champ ?? []).map((arrayField) =>
-          // TO DO
-          arrayField.map((character: Character | FormBlockProps, i: number) => (
-            <GridItem key={i}>
-              {isFetching ? <SkeletonSquare /> : <Card data={character} />}
-            </GridItem>
-          ))
+          [arrayField].map(
+            (character: Character | FormBlockProps, i: number) => (
+              <GridItem key={i}>
+                {isFetching ? <SkeletonSquare /> : <Card data={character} />}
+              </GridItem>
+            )
+          )
         )}
       </Grid>
     </Section>

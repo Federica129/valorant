@@ -36,7 +36,7 @@ export const AgentsBlock = () => {
             </GridItem>
           ))}
         {(state.champ ?? []).map((arrayField) =>
-          [arrayField].map(
+          ((arrayField as any) || []).map(
             (character: Character | FormBlockProps, i: number) => (
               <GridItem key={i}>
                 {isFetching ? <SkeletonSquare /> : <Card data={character} />}

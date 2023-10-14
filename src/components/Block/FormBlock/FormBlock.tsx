@@ -7,14 +7,7 @@ import {
   Input,
   Text,
 } from "@chakra-ui/react";
-import { FormBlockProps } from "./FormBlock.props";
-import { Fragment, useState } from "react";
-import {
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-  useWatch,
-} from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, addChamp } from "../../../../utils/store/store";
 import { Section } from "../../molecules/Section/Section";
@@ -29,6 +22,7 @@ export const FormBlock = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    resetField,
   } = useForm({
     defaultValues: {
       data: [
@@ -43,9 +37,10 @@ export const FormBlock = () => {
     control,
     name: "data",
   });
-  const onSubmit = (data: any) => console.log("data", data);
-  // dispatch(addChamp(data));
-  //TO DO
+  const onSubmit = (data: any) => {
+    dispatch(addChamp(data.data));
+    resetField("data");
+  };
 
   console.log(errors?.data?.[0]?.displayName);
   return (

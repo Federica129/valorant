@@ -7,6 +7,8 @@ import { GET } from "../../../../utils/api";
 import { Character } from "../../../../types/characterVal";
 import { RootState } from "../../../../utils/store/store";
 import { useSelector } from "react-redux";
+import { Key, useId } from "react";
+import { FormBlockProps } from "../FormBlock/FormBlock.props";
 
 export const AgentsBlock = () => {
   const { data, isFetching } = useQuery({
@@ -15,7 +17,6 @@ export const AgentsBlock = () => {
   });
 
   const state = useSelector((state: RootState) => state.champ);
-  console.log(state.champ);
 
   return (
     <Section title="agents" colorScheme="dark">
@@ -35,11 +36,14 @@ export const AgentsBlock = () => {
               {isFetching ? <SkeletonSquare /> : <Card data={character} />}
             </GridItem>
           ))}
-        {(state.champ ?? []).map((character, index) => (
-          <GridItem key={index}>
-            {isFetching ? <SkeletonSquare /> : <Card data={character} />}
-          </GridItem>
-        ))}
+        {(state.champ ?? []).map((arrayField) =>
+          // TO DO
+          arrayField.map((character: Character | FormBlockProps, i: number) => (
+            <GridItem key={i}>
+              {isFetching ? <SkeletonSquare /> : <Card data={character} />}
+            </GridItem>
+          ))
+        )}
       </Grid>
     </Section>
   );

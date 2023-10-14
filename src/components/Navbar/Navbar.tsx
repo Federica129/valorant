@@ -66,12 +66,14 @@ const Navbar = (): JSX.Element => {
             }}
           >
             <Box borderRadius="10rem" overflow="hidden">
-              <Image
-                width="45"
-                height="45"
-                src={photoURL}
-                alt="photo account"
-              />
+              {photoURL && (
+                <Image
+                  width="45"
+                  height="45"
+                  src={photoURL}
+                  alt="photo account"
+                />
+              )}
             </Box>
             <Text>Hi, {displayName?.split(" ")[0]}</Text>
           </Flex>

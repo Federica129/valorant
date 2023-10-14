@@ -1,5 +1,6 @@
 import { Character } from "../../../../types/characterVal";
 
-export interface FormBlockProps {
-  data: Pick<Character, "displayName" | "displayIcon">[];
-}
+export type FormBlockProps = Pick<
+  Character,
+  "displayName" | "displayIcon" | "uuid"
+>;

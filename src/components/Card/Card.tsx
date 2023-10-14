@@ -10,8 +10,8 @@ type CardProps = {
 };
 
 const Card: React.FC<CardProps> = ({ data }) => {
-  const { displayIcon, displayName, uuid = "1" } = data;
-  // TO DO
+  const { displayIcon, displayName, uuid = "1" } = data || {};
+
   return (
     <Box>
       <Link href={`${uuid}`}>

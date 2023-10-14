@@ -55,12 +55,21 @@ export const addNewChampSlice = createSlice({
 
 export const { addChamp } = addNewChampSlice.actions;
 
+const defaultMiddlewareConfig = {
+  serializableCheck: {
+    ignoredPaths: ["user.user"],
+    // TO DO error payload
+  },
+};
+
 export const store = configureStore({
   reducer: {
     favourite: favouriteSlice.reducer,
     user: userSlice.reducer,
     champ: addNewChampSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware(defaultMiddlewareConfig),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

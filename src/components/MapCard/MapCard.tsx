@@ -43,7 +43,8 @@ export const MapCard = (props: MapCardProps) => {
         src={splash}
         alt={displayName}
         fill
-        sizes="100vw"
+        sizes="100%"
+        priority
       />
     </Box>
   );

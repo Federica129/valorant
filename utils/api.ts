@@ -8,7 +8,6 @@ import axios from "axios";
 // };
 
 const GET = async (input: string, uuid?: string | number) => {
-  console.log(input);
   const res = await axios.get(
     `https://valorant-api.com/v1/${input}/` + `${uuid ?? ""}`
   );

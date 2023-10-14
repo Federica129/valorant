@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
+import { FormBlockProps } from "../../src/components/Block/FormBlock/FormBlock.props";
 
 export interface FavouriteState {
   agents: Record<string, unknown>[];
@@ -38,11 +39,37 @@ export const userSlice = createSlice({
 
 export const { login } = userSlice.actions;
 
+const initialAddNewChampState: { champ: FormBlockProps[] } = {
+  champ: [],
+};
+
+export const addNewChampSlice = createSlice({
+  name: "addNewChamp",
+  initialState: initialAddNewChampState,
+  reducers: {
+    addChamp: (state, action) => {
+      state.champ = [...state.champ, action.payload];
+    },
+  },
+});
+
+export const { addChamp } = addNewChampSlice.actions;
+
+const defaultMiddlewareConfig = {
+  serializableCheck: {
+    ignoredPaths: ["user.user"],
+    // TO DO error payload
+  },
+};
+
 export const store = configureStore({
   reducer: {
     favourite: favouriteSlice.reducer,
     user: userSlice.reducer,
+    champ: addNewChampSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware(defaultMiddlewareConfig),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
